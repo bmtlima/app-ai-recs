@@ -5,10 +5,12 @@ import gql from "graphql-tag";
 
 import { AuthContext } from '../context/auth';
 import { useForm } from '../util/hooks';
+import { useNavigate } from "react-router-dom";
 
 //function Register(props) {
 function Login(props) {
   const context = useContext(AuthContext);
+  const navigate = useNavigate();
   const [errors, setErrors] = useState({});
 
   const { onChange, onSubmit, values } = useForm(loginUserCallback, {
@@ -20,8 +22,9 @@ function Login(props) {
     update(_, { data: { login: userData}}){
       //console.log('help');
       context.login(userData)
-      window.location.href = '/';
-      props.history.push('/');
+      //window.location.href = '/';
+      //props.history.push('/');
+      navigate("/");
     },
     onError(err) {
       if (err.graphQLErrors && err.graphQLErrors.length > 0) {
